@@ -9,10 +9,7 @@ from threading import Thread
 from unittest import skipIf, SkipTest, skipUnless
 import pandas
 
-if sys.version_info < (3, 8):
-    from aiounittest import AsyncTestCase as TestCase
-else:
-    from unittest import IsolatedAsyncioTestCase as TestCase
+from unittest import IsolatedAsyncioTestCase as TestCase
 
 import aioduckdb
 from .helpers import setup_logger

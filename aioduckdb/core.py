@@ -29,10 +29,7 @@ from typing import (
 )
 from warnings import warn
 
-if sys.version_info >= (3, 8):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+from typing import Literal
 
 from .context import contextmanager
 from .cursor import Cursor
@@ -51,10 +48,7 @@ LOG = logging.getLogger("aioduckdb")
 
 
 def get_loop(future: asyncio.Future) -> asyncio.AbstractEventLoop:
-    if sys.version_info >= (3, 7):
-        return future.get_loop()
-    else:
-        return future._loop
+    return future.get_loop()
 
 
 class Connection(Thread):
@@ -85,7 +79,7 @@ class Connection(Thread):
         return self._connection
 
     # No automatic last_rowid, use an insert with `returning (rowid)`
-    # additionally, rowid is currently broken: https://github.com/duckdb/duckdb/issues/4805 and sequences are recommended as an alternative
+    # Note: sequences are recommended as an alternative to rowid for generating unique identifiers
     def _execute_insert(
         self, sql: str, parameters: Iterable[Any]
     ) -> Union[Optional[Tuple[int]], object]:

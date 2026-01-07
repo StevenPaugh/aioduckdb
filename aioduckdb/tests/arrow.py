@@ -12,10 +12,7 @@ except:
     print("CAN'T RUN ARROW TEST")
     can_run = False
 
-if sys.version_info < (3, 8):
-    from aiounittest import AsyncTestCase as TestCase
-else:
-    from unittest import IsolatedAsyncioTestCase as TestCase
+from unittest import IsolatedAsyncioTestCase as TestCase
 
 import aioduckdb
 from .helpers import setup_logger
