@@ -6,10 +6,7 @@ import tempfile
 import numpy as np
 import pandas as pd
 
-if sys.version_info < (3, 8):
-    from aiounittest import AsyncTestCase as TestCase
-else:
-    from unittest import IsolatedAsyncioTestCase as TestCase
+from unittest import IsolatedAsyncioTestCase as TestCase
 
 import aioduckdb
 from .helpers import setup_logger
@@ -74,6 +71,7 @@ class RelationTest(TestCase):
             rel_2 = await conn.from_df(test_df_2)
 
             inter = await rel.intersect(rel_2)
+            inter = await inter.order('i')
             inter = await inter.fetchall()
 
             self.assertEqual(inter, [(3,), (4,)])
@@ -86,13 +84,15 @@ class RelationTest(TestCase):
             self.assertEqual(rs, [(10,)])
 
             rjs = await rel.aggregate('j, sum(i)')
+            rjs = await rjs.order('j')
             rjs = await rjs.fetchall()
-            self.assertEqual(rjs, [('one', 1), ('two', 2), ('three', 3), ('four', 4)])
+            self.assertEqual(rjs, [('four', 4), ('one', 1), ('three', 3), ('two', 2)])
 
     async def test_distinct_operator(self):
         async with aioduckdb.connect(TEST_DB) as conn:
             rel = await get_relation(conn)
             rel = await rel.distinct()
+            rel = await rel.order('i')
             rel = await rel.fetchall()
             self.assertEqual(rel, [(1, 'one'), (2, 'two'), (3, 'three'),(4, 'four')])
 

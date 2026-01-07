@@ -85,9 +85,8 @@ class Cursor:
         """Close the cursor."""
         await self._execute(self._cursor.close)
 
-    # rowcount is not currently supported but has already been reported as a bug in the duckdb discord
-    # and accepted as such by the developers. probably will be implemented soon but this method is commented
-    # due to mypy checks failing
+    # TODO: Test if rowcount is now supported in DuckDB 1.4.3+
+    # Previously not supported; uncomment and test if this property now works:
     # @property
     # def rowcount(self) -> int:
     #     return self._cursor.rowcount

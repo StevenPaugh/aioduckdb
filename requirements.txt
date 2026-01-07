@@ -1,1 +1,14 @@
-duckdb
+duckdb>=1.4.3,<2.0.0
+pandas
+aiounittest==1.4.1; python_version < '3.8'
+attribution
+black
+coverage[toml]
+flake8
+flake8-bugbear
+flit
+mypy
+sphinx
+sphinx-mdinclude
+usort
+pandas

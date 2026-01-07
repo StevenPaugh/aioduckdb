@@ -44,7 +44,7 @@ class Relation:
         return self.relation.columns
     
     async def count(self, count_aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.count, count_aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.count, count_aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def create(self, table_name: str) -> None:
@@ -130,16 +130,8 @@ class Relation:
                                   how=how)
         return Relation(self._conn, rel)
 
-    async def kurt(self, aggregation_columns: str, group_columns: str = '') -> "Relation":
-        rel = await self._execute(self.relation.kurt, aggregation_columns, group_columns=group_columns)
-        return Relation(self._conn, rel)
-
     async def limit(self, n: int, offset: int = 0) -> "Relation":
         rel = await self._execute(self.relation.limit, n, offset=offset)
-        return Relation(self._conn, rel)
-
-    async def mad(self, aggregation_columns: str, group_columns: str = '') -> "Relation":
-        rel = await self._execute(self.relation.mad, aggregation_columns, group_columns=group_columns)
         return Relation(self._conn, rel)
 
     async def map(self, map_function) -> "Relation":
@@ -147,23 +139,23 @@ class Relation:
         return Relation(self._conn, rel)
 
     async def max(self, aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.max, aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.max, aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def min(self, aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.min, aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.min, aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def mean(self, aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.mean, aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.mean, aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def median(self, aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.median, aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.median, aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def mode(self, aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.mode, aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.mode, aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def order(self, order_expr: str) -> "Relation":
@@ -171,7 +163,7 @@ class Relation:
         return Relation(self._conn, rel)
 
     async def prod(self, aggregation_columns: str, group_columns: str = '') -> "Relation":
-        rel = await self._execute(self.relation.prod, aggregation_columns, group_columns=group_columns)
+        rel = await self._execute(self.relation.product, aggregation_columns, groups=group_columns)
         return Relation(self._conn, rel)
 
     async def project(self, project_expr: str) -> "Relation":
@@ -179,32 +171,24 @@ class Relation:
         return Relation(self._conn, rel)
 
     async def quantile(self, q: str, quantile_aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.quantile, q, quantile_aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.quantile, quantile_aggr, q, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def query(self, query: str, alias: str = 'query_relation') -> "Relation":
         rel = await self._execute(self.relation.query, query, alias=alias)
         return Relation(self._conn, rel)
 
-    async def sem(self, aggregation_columns: str, group_columns: str = '') -> "Relation":
-        rel = await self._execute(self.relation.sem, aggregation_columns, group_columns=group_columns)
-        return Relation(self._conn, rel)
-
     @property
     def shape(self):
         return self.relation.shape
 
-    async def skew(self, aggregation_columns: str, group_columns: str = '') -> "Relation":
-        rel = await self._execute(self.relation.skew, aggregation_columns, group_columns=group_columns)
-        return Relation(self._conn, rel)
-
     async def std(self, aggregation_columns: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.std, aggregation_columns, group_expr=group_expr)
+        rel = await self._execute(self.relation.std, aggregation_columns, groups=group_expr)
         return Relation(self._conn, rel)
 
 
     async def sum(self, aggregation_columns: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.sum, aggregation_columns, group_expr=group_expr)
+        rel = await self._execute(self.relation.sum, aggregation_columns, groups=group_expr)
         return Relation(self._conn, rel)
 
     @property
@@ -224,7 +208,7 @@ class Relation:
         return Relation(self._conn, rel)
 
     async def var(self, var_aggr: str, group_expr: str = '') -> "Relation":
-        rel = await self._execute(self.relation.var, var_aggr, group_expr=group_expr)
+        rel = await self._execute(self.relation.var, var_aggr, groups=group_expr)
         return Relation(self._conn, rel)
 
     async def write_csv(self, file_name: str) -> None:
