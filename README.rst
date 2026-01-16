@@ -1,6 +1,8 @@
 aioduckdb\: DuckDB for AsyncIO
 ==============================
 
+Note: This version should support latest versions of duckdb.
+
 aioduckdb provides a friendly, async interface to DuckDB databases. It has been ported from the original aiosqlite module.
 
 It replicates the ``duckdb`` module, but with async versions
